@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 //public class Person
@@ -337,7 +339,7 @@ using System.Text;
 
 //            var phoneNumbers = new Dictionary<int, string>();
 //            sr.ReadLine();
-//            while((line = sr.ReadLine()) != null && line != "Phone Numbers:")
+//            while ((line = sr.ReadLine()) != null && line != "Phone Numbers:")
 //            {
 //                string[] parts = line.Split('-');
 //                int key = int.Parse(parts[0]);
@@ -345,7 +347,7 @@ using System.Text;
 //                phoneNumbers.Add(key, value);
 //            }
 //            Console.WriteLine("Names:");
-//            foreach(string name in names)
+//            foreach (string name in names)
 //            {
 //                Console.WriteLine(name);
 //            }
@@ -383,25 +385,431 @@ using System.Text;
 //    }
 //}
 
+//class Program
+//{
+//    static void Main(string[] args)
+//    {
+//        string filePath = @"C:\TestFile\myFile.txt";
+
+//        if (File.Exists(filePath))
+//        {
+//            // Membaca isi file dan diubah menjadi string array
+//            string[] lines = File.ReadAllLines(filePath);
+//            // Read per line dan ditampilkan ke console
+//            foreach (var line in lines)
+//            {
+//                Console.WriteLine(line);
+//            }
+//        }
+//        else
+//        {
+//            Console.WriteLine("File Does Not Exist");
+//        }
+//    }
+//}
+
+//class Program
+//{
+//    static void Main()
+//    {
+//        string filePath = @"C:\TestFile\myFile.txt";
+
+//        if(File.Exists(filePath))
+//        {
+//            // Membuka file dan membaca file kemudian ditutup
+//            string lines = File.ReadAllText(filePath);
+//            Console.WriteLine(lines);
+//        }
+//        else
+//        {
+//            Console.WriteLine("File Doesn't exist");
+//        }
+//    }
+//}
+
+//class Program
+//{
+//    static void Main()
+//    {
+//        string filePath = @"C:\TestFile\myFile.txt";
+//        string fileCopyPath = @"C:\TestFile\myFileCopy.txt";
+
+//        if (File.Exists(filePath))
+//        {
+//            // Melakukan Copy file ke destination lalu overwrite bila true
+//            // Jika pakai argumen true makan akan menimpa file yang sudah ada
+//            File.Copy(filePath, fileCopyPath,true);
+//            string lines = File.ReadAllText(fileCopyPath);
+//            Console.WriteLine(lines);
+//        }
+//        else
+//        {
+//            Console.WriteLine("File Doesn't exist");
+//        }
+//    }
+//}
+//class Program
+//{
+//    static void Main()
+//    {
+//        string filePath = @"C:\TestFile\myFile.txt";
+
+//        if (File.Exists(filePath))
+//        {
+//            string[] contents = { "Achmad", "Fikri", "Fadhilah" };
+//            // Akan melakukan overwrite pada file yang sudah ada
+//            File.WriteAllLines(filePath, contents);
+//            Console.WriteLine("File Created");
+//            // Membaca semua line
+//            string lines = File.ReadAllText(filePath);
+//            Console.WriteLine(lines);
+//        }
+//        else
+//        {
+//            Console.WriteLine("File Doesn't exist");
+//        }
+//    }
+//}
+// TextWriter dan TestReader
+//class Program
+//{
+//    static void Main()
+//    {
+//        string filePath = @"C:\TestFile\myFile.txt";
+//        string lines;
+//        using(TextReader tr = File.OpenText(filePath))
+//        {
+//            lines = tr.ReadToEnd();
+//            Console.WriteLine(lines);
+//        }
+//        using (TextWriter writer = File.CreateText(filePath))
+//        {
+//            writer.WriteLine("C# EFCore");
+//            writer.WriteLine("C# REST API");
+//        }
+//        Console.WriteLine("File Write Success");
+
+//        using (TextReader reader = File.OpenText(filePath))
+//        {
+//            Console.WriteLine(reader.ReadToEnd());
+//        }
+//    }
+//}
+
+/*
+ *  BinaryWriter dan BinaryReader
+ *  Salah satu cara menyimpan file ke binary format
+ */
+// Write BinaryWriter
+//class Program
+//{
+//    static void Main()
+//    {
+//        string filePath = @"C:\TestFile\myBinary.txt";
+//        // Melakukan pembuatan file via filestream
+//        using (FileStream fs = new FileStream(filePath,FileMode.Create))
+//        // Menggunakan binarywriter ke filestream
+//        using(BinaryWriter bw = new BinaryWriter(fs))
+//        {
+//            bw.Write("C# Fundamental Enigmacamp");
+//            bw.Write(12345);
+//        }
+//        Console.WriteLine("Success");
+//    }
+//}
+
+/*      BinaryReader
+ *      penyimpanan pada binarywriter adalah secara primitive sesuai dengan tipe datanya
+ *      binary reader akan membaca sesuai dengan tipe datanya
+ *      Akan membaca tipe data per line
+ */
+//class Program
+//{
+//    static void Main()
+//    {
+//        string filePath = @"C:\TestFile\myBinary.txt";
+//        // Menggunakan binarywriter ke filestream
+//        using (BinaryWriter bw = new BinaryWriter(File.Open(filePath, FileMode.Create)))
+//        {
+//            bw.Write("C# Fundamental Enigmacamp");
+//            bw.Write(12345);
+//        }
+//        // Menggunakan binarywriter ke filestream
+//        using (BinaryReader br = new BinaryReader(File.Open(filePath, FileMode.Open)))
+//        {
+//            string s = br.ReadString();
+//            int i = br.ReadInt32();
+//            Console.WriteLine(s);
+//            Console.WriteLine(i);
+//        }
+//        Console.WriteLine("Success");
+//    }
+//}
+
+// MENYIMPAN OBJECT VIA BINARYWRITER DAN BINARYREADER
+//class Program
+//{
+//    // Serialisasi adalah proses mengubah object atau class menjadi format yg bisa disimpan atau ditransmit.
+//    // Ketika object atau class diserialisasi, semua nilai yang ada di object tersebut akan di transformasi ke xml,json, atau biner atau ke db
+//    [Serializable] // Attribut di C# yg mengindikasikan bahwa object atau class ini bisa di serialisasi
+//    class Person
+//    {
+//        public string Name { get; set; }
+//        public int Age { get; set; }
+//        public Person(string name, int age)
+//        {
+//            Name = name;
+//            Age = age;
+//        }
+//    }
+//    static void Main()
+//    {
+
+//        string filePath = @"C:\TestFile\myFile.txt";
+
+//        var person = new Person("Achmad", 20);
+//        // Membuka file untuk di write
+//        using (FileStream fs = File.OpenWrite(filePath))
+//        // Melakukan 
+//        using (BinaryWriter bw = new BinaryWriter(fs))
+//        {
+//            BinaryFormatter formatter = new BinaryFormatter();
+//            // Serialisasi object person ke basestream punya binarywriter
+//            // Kemudian disimpan via FileStream
+//            formatter.Serialize(bw.BaseStream, person);
+//        }
+
+//        // Membuka file untuk dibaca
+//        using(FileStream fs = File.OpenRead(filePath))
+//        // Melakukan pembacaan binary via filestream
+//        using(BinaryReader reader = new BinaryReader(fs))
+//        {
+//            BinaryFormatter formatter  = new BinaryFormatter();
+//            // Deserialiasi binary data via binaryreader ke object person
+//            // Menggunakan type casting
+//            Person readPerson = (Person)formatter.Deserialize(reader.BaseStream);
+
+//            Console.WriteLine($"{readPerson.Name} - {readPerson.Age}");
+//        }
+//    }
+//}
+
+//class Person
+//{
+//    public string Name { get; set; }
+//    public int Age { get; set; }
+//    public Person(string name, int age)
+//    {
+//        Name = name;
+//        Age = age;
+//    }
+//}
+
+//class Program
+//{
+//    static readonly string filePath = @"C:\TestFile\myFile.txt";
+//    public static void Main()
+//    {
+//        Person person = new Person("Fikri", 20);
+//        SavePerson(person);
+
+//        Person readPerson = ReadPerson();
+//        Console.WriteLine($"{readPerson.Name} - {readPerson.Age}");
+//    }
+
+//    static void SavePerson(Person person)
+//    {
+//        using (StreamWriter writer = new StreamWriter(new FileStream(filePath, FileMode.Open, FileAccess.Write)))
+//        {
+//            string line = string.Format("{0},{1}", person.Name, person.Age);
+//            writer.WriteLine(line);
+//        }
+//    }
+
+//    static Person ReadPerson()
+//    {
+//        using (StreamReader reader = new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
+//        {
+//            string line = reader.ReadLine();
+//            string[] persons = line.Split(',');
+//            string name = persons[0];
+//            int age = int.Parse(persons[1]);
+
+//            return new Person(name, age);
+//        }
+//    }
+//}
+
+//public class Person
+//{
+//    public string FirstName { get; set; }
+//    public string LastName { get; set; }
+//    public int Age { get; set; }
+//    public Person(string firstName, string lastName, int age)
+//    {
+//        FirstName = firstName;
+//        LastName = lastName;
+//        Age = age;
+//    }
+//}
+
+//public class Program
+//{
+//    private static List<Person> people = new List<Person>();
+//    private static readonly string filePath = @"C:\TestFile\myPersons.txt";
+//    public static void Main()
+//    {
+//        while (true)
+//        {
+//            Console.Clear();
+//            Console.WriteLine("Menu");
+//            Console.WriteLine("1. Create Person");
+//            Console.WriteLine("2. Read People");
+//            Console.WriteLine("3. Update Person");
+//            Console.WriteLine("4. Delete Person");
+//            Console.WriteLine("5. Exit");
+//            Console.Write("Enter Your Choice: ");
+//            int choice = int.Parse(Console.ReadLine());
+//            Console.WriteLine();
+//            switch (choice)
+//            {
+//                case 1:
+//                    CreatePerson();
+//                    break;
+//                case 2:
+//                    ReadPeople();
+//                    break;
+//                case 3:
+//                    UpdatePerson();
+//                    break;
+//                case 4:
+//                    DeletePerson();
+//                    break;
+//                case 5:
+//                    return;
+//                default:
+//                    Console.WriteLine("Invalid Choice. Try Again");
+//                    break;
+//            }
+//        }
+//    }
+//    public static void CreatePerson()
+//    {
+//        Console.Write("Enter First Name: ");
+//        string firstName = Console.ReadLine();
+
+//        Console.Write("Enter Last Name: ");
+//        string lastName = Console.ReadLine();
+
+//        Console.Write("Enter Age");
+//        int age = int.Parse(Console.ReadLine());
+
+//        Person person = new Person(firstName, lastName, age);
+
+//        people.Add(person);
+
+//        SavePeople();
+//    }
+//    public static void ReadPeople()
+//    {
+//        LoadPeople();
+
+//        Console.WriteLine("People: ");
+//        foreach (Person person in people)
+//        {
+//            Console.WriteLine($"{person.FirstName} {person.LastName} Age: {person.Age}");
+//        }
+
+//        Console.ReadKey();
+//    }
+//    private static void UpdatePerson()
+//    {
+//        LoadPeople();
+
+//        Console.Write("Enter index of person to update: ");
+//        int index = int.Parse(Console.ReadLine());
+
+//        Console.Write("Enter First Name: ");
+//        string firstName = Console.ReadLine();
+
+//        Console.Write("Enter Last Name: ");
+//        string lastName = Console.ReadLine();
+
+//        Console.Write("Enter Age");
+//        int age = int.Parse(Console.ReadLine());
+
+//        Person person = new Person(firstName, lastName, age);
+
+//        people[index] = person;
+
+//        SavePeople();
+
+//    }
+//    private static void DeletePerson()
+//    {
+//        LoadPeople();
+
+//        Console.Write("Enter index of person to update: ");
+//        int index = int.Parse(Console.ReadLine());
+
+//        people.RemoveAt(index);
+
+//        SavePeople();
+//    }
+//    private static void SavePeople()
+//    {
+//        if (File.Exists(filePath))
+//        {
+//            using (StreamWriter sw = new StreamWriter(new FileStream(filePath,FileMode.OpenOrCreate,FileAccess.ReadWrite)))
+//            {
+//                foreach (Person person in people)
+//                {
+//                    sw.WriteLine($"Name: {person.FirstName} {person.LastName} - Age: {person.Age}");
+//                }
+//            }
+
+//        }
+//    }
+
+//    private static void LoadPeople()
+//    {
+//        people.Clear();
+
+//        if (File.Exists(filePath))
+//        {
+//            using (StreamReader sr = new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
+//            {
+//                while(!sr.EndOfStream)
+//                {
+//                    string lines = sr.ReadLine();
+//                    string[] parts = lines.Split(',');
+
+//                    string firstName = parts[0];
+//                    string lastName = parts[1];
+//                    int age = int.Parse(parts[2]);
+
+//                    Person person = new Person(firstName, lastName, age);
+//                    people.Add(person);
+//                }
+//            }
+//        }
+//    }
+//}
+
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        string filePath = @"C:\TestFile\myFile.txt";
+        string fileName = "myFile.txt";
+        // Akan mendapatkan path dari current directory punya si app.exe
+        // c:\TestFiles\
+        string appPath = AppDomain.CurrentDomain.BaseDirectory;
+        // Join appPath dgn filename
+        string filePath = Path.Combine(appPath, fileName);
 
-        if (File.Exists(filePath))
+        using (StreamWriter sw = new StreamWriter(filePath))
         {
-            // Membaca isi file dan diubah menjadi string array
-            string[] lines = File.ReadAllLines(filePath);
-            // Read per line dan ditampilkan ke console
-            foreach (var line in lines)
-            {
-                Console.WriteLine(line);
-            }
-        }
-        else
-        {
-            Console.WriteLine("File Does Not Exist");
+            sw.WriteLine("Mencoba Dynamic Path");
         }
     }
 }
