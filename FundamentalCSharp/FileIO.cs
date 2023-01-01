@@ -701,7 +701,7 @@ using System.Text;
 //        Console.Write("Enter Last Name: ");
 //        string lastName = Console.ReadLine();
 
-//        Console.Write("Enter Age");
+//        Console.Write("Enter Age: ");
 //        int age = int.Parse(Console.ReadLine());
 
 //        Person person = new Person(firstName, lastName, age);
@@ -760,11 +760,11 @@ using System.Text;
 //    {
 //        if (File.Exists(filePath))
 //        {
-//            using (StreamWriter sw = new StreamWriter(new FileStream(filePath,FileMode.OpenOrCreate,FileAccess.ReadWrite)))
+//            using (StreamWriter sw = new StreamWriter(new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite)))
 //            {
 //                foreach (Person person in people)
 //                {
-//                    sw.WriteLine($"Name: {person.FirstName} {person.LastName} - Age: {person.Age}");
+//                    sw.WriteLine($"{person.FirstName},{person.LastName},{person.Age}");
 //                }
 //            }
 
@@ -779,7 +779,7 @@ using System.Text;
 //        {
 //            using (StreamReader sr = new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
 //            {
-//                while(!sr.EndOfStream)
+//                while (!sr.EndOfStream)
 //                {
 //                    string lines = sr.ReadLine();
 //                    string[] parts = lines.Split(',');
@@ -796,20 +796,20 @@ using System.Text;
 //    }
 //}
 
-class Program
-{
-    static void Main()
-    {
-        string fileName = "myFile.txt";
-        // Akan mendapatkan path dari current directory punya si app.exe
-        // c:\TestFiles\
-        string appPath = AppDomain.CurrentDomain.BaseDirectory;
-        // Join appPath dgn filename
-        string filePath = Path.Combine(appPath, fileName);
+//class Program
+//{
+//    static void Main()
+//    {
+//        string fileName = "myFile.txt";
+//        // Akan mendapatkan path dari current directory punya si app.exe
+//        // c:\TestFiles\
+//        string appPath = AppDomain.CurrentDomain.BaseDirectory;
+//        // Join appPath dgn filename
+//        string filePath = Path.Combine(appPath, fileName);
 
-        using (StreamWriter sw = new StreamWriter(filePath))
-        {
-            sw.WriteLine("Mencoba Dynamic Path");
-        }
-    }
-}
+//        using (StreamWriter sw = new StreamWriter(filePath))
+//        {
+//            sw.WriteLine("Mencoba Dynamic Path");
+//        }
+//    }
+//}
